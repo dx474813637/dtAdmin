@@ -1,0 +1,1 @@
+本项目由 Vite + Vue 3 + TypeScript + Tailwind CSS + shadcn/ui 构建，使用了 Vue 3 的 Composition API 和选项 API。

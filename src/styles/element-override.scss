@@ -1,0 +1,13 @@
+// src/styles/element-override.scss
+/* 覆盖 Element Plus 默认的 SCSS 变量 */
+@forward 'element-plus/theme-chalk/src/common/var.scss' with (
+  $colors: (
+    'primary': (
+      'base': #771ace,
+    ),
+  ),
+  $messagebox: (
+    'border-radius': '12px',
+  )
+);
+// @use "element-plus/theme-chalk/src/index.scss" as *;

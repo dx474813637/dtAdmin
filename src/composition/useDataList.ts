@@ -11,6 +11,7 @@ export function useDataList(data: UseDataListOptions) {
   const $api = inject('$api') as Record<string, (params: any) => Promise<any>>
   const dataList = ref<any[]>([])
   const curP = ref(1)
+  const total = ref(0)
   const loadstatus = ref<'loadmore' | 'loading' | 'nomore'>('loadmore')
   const loading = ref(false)
   
@@ -48,6 +49,7 @@ export function useDataList(data: UseDataListOptions) {
       } else {
         if (res.code === 1) {
           dataList.value = [...dataList.value, ...res.list]
+          total.value = res.total || 0
           if (dataList.value.length >= res.total) {
             loadstatus.value = 'nomore'
           } else {
@@ -90,6 +92,7 @@ export function useDataList(data: UseDataListOptions) {
     curP,
     loadstatus,
     loading,
+    total,
     params,
     getDataList,
     initDataListParams,

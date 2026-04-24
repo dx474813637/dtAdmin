@@ -2,6 +2,12 @@
 <template>
 	<div class=" p-4">
 		<div class="max-w-full mx-auto">
+			<!-- 页面标题 -->
+			<div class="mb-8 text-center">
+				<h1 class="text-3xl font-bold text-gray-800 mb-2">用户信息</h1>
+				<p class="text-gray-600">管理和查看该账户用户信息</p>
+			</div>
+
 			<!-- 用户信息卡片 -->
 			<div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
 				<!-- 加载状态 -->

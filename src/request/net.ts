@@ -57,8 +57,8 @@ export const createAxiosByinterceptors = (
             // 在发送请求之前做些什么
             config.headers = {
                 ...config.headers, 
-                token: localStorage.getItem('token'),
-                login: localStorage.getItem('login'),
+                userid: localStorage.getItem('userid'),
+                // login: localStorage.getItem('login'),
             }  
             const { loading = true } = config;
             // console.log("config:", config);

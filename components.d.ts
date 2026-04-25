@@ -81,6 +81,7 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     SafeArea: typeof import('./src/components/ui/safe-area/SafeArea.vue')['default']
     ScrollArea: typeof import('./src/components/ui/scroll-area/ScrollArea.vue')['default']
+    ScrollBar: typeof import('./src/components/ui/scroll-area/ScrollBar.vue')['default']
     Separator: typeof import('./src/components/ui/separator/Separator.vue')['default']
     Sheet: typeof import('./src/components/ui/sheet/Sheet.vue')['default']
     SheetClose: typeof import('./src/components/ui/sheet/SheetClose.vue')['default']

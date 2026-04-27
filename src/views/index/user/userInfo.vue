@@ -72,28 +72,54 @@
 						<div class="flex justify-between items-center py-3 border-b border-gray-100">
 							<span class="text-gray-500">角色</span>
 							<span class="text-gray-800 font-medium">
-								{{ userInfo.role === 0 ? '地推人员' : '地推管理员' }}
+								{{ roleName }}
 							</span>
 						</div>
 						<!-- 发展人 -->
-						<div class="flex justify-between items-center py-3 border-b border-gray-100">
-							<span class="text-gray-500">发展人</span>
-							<span class="text-gray-800 font-medium">{{ userInfo.develop || '无' }}</span>
+							<div class="flex justify-between items-center py-3 border-b border-gray-100">
+								<span class="text-gray-500">发展人</span>
+								<span class="text-gray-800 font-medium">{{ userInfo.develop || '无' }}</span>
+							</div>
+
+							<!-- 发展码 -->
+							<div class="flex justify-between items-center py-3 border-b border-gray-100">
+								<span class="text-gray-500">发展码</span>
+								<div class="flex items-center">
+									<button 
+										v-if="userInfo.ewm" 
+										class="text-indigo-600 hover:text-indigo-800 text-sm font-medium"
+										@click="previewEwm"
+									>
+										查看二维码
+									</button>
+									<span v-else class="text-gray-400 font-medium">未设置</span>
+								</div>
+							</div>
+
 						</div>
-
-
-					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
+	<!-- 图片预览对话框 -->
+	<ImagePreview
+		:dialogOpen="imagePreviewDialogOpen"
+		:images="previewImages"
+		@update:dialogOpen="(value) => imagePreviewDialogOpen = value"
+	/>
+
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, inject } from 'vue'
 import { SquarePen } from "lucide-vue-next"
 import { info } from '@/apis/interface/base'
 import { Input } from "@/components/ui/input"
+import { ImagePreview } from '@/components/partner'
+import {userStore} from '@/stores/user'
+const user = userStore()
+const {roleName} = toRefs(user)
 const $api = inject('$api')
 const userInfo = ref({ name: '' })
 const loading = ref(true)
@@ -101,11 +127,16 @@ const error = ref('')
 const isDialogOpen = ref(false)
 const editLoading = ref(false)
 
+// 图片预览相关
+const imagePreviewDialogOpen = ref(false)
+const previewImages = ref([])
+
 onMounted(async () => {
 	try {
 		const res = await $api.info()
 		if (res.code == 1) {
 			userInfo.value = res.list
+			user.setUserInfo(res.list)
 		}
 	} catch (err) {
 		error.value = '获取用户信息失败'
@@ -130,6 +161,14 @@ const submitForm = async () => {
 		console.error(err)
 	} finally {
 		editLoading.value = false
+	}
+}
+
+// 预览发展码
+const previewEwm = () => {
+	if (userInfo.value.ewm) {
+		previewImages.value = [userInfo.value.ewm]
+		imagePreviewDialogOpen.value = true
 	}
 }
 </script>

@@ -51,7 +51,7 @@
 					</FormItem>
 				</FormField>
 				<DialogFooter class="mt-4">
-					<Button variant="outline" @click="dialogOpen = false">取消</Button>
+					<Button type="button" variant="outline" @click="handleOpenChange(false)">取消</Button>
 					<Button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white">保存</Button>
 				</DialogFooter>
 			</form>
@@ -101,6 +101,10 @@ watch(() => props.dialogOpen, (newDialogOpen) => {
 	}
 }, { immediate: true })
 
+const handleOpenChange = (value) => {
+	emit('update:dialogOpen', value)
+}
+
 const onSubmit = handleSubmit(async (formdata) => {
 	if (!props.partner) return
 	try {
@@ -118,7 +122,7 @@ const onSubmit = handleSubmit(async (formdata) => {
 			}
 			ElMessage.success(res.msg)
 			emit('update:partner', updatedPartner)
-			emit('update:dialogOpen', false)
+			handleOpenChange(false)
 		}
 	} catch (err) {
 		console.error('保存备注失败', err)

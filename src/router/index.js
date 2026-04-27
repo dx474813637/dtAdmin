@@ -11,7 +11,7 @@ import { createRouter, createWebHistory, createWebHashHistory, RouterView } from
 const routes = [
     {
         path: '/',
-        redirect: () => ({name: 'userInfo'}),
+        redirect: () => ({ name: 'userInfo' }),
     },
     {
         path: '/index',
@@ -20,15 +20,15 @@ const routes = [
             role: [0, 1],
             needLogin: true
         },
-        redirect: () => ({name: 'userInfo'}),
+        redirect: () => ({ name: 'userInfo' }),
         component: () => import('@/views/index/index.vue'),
-        children: [ 
+        children: [
             {
                 path: 'userInfo',
                 name: 'userInfo',
                 meta: {
-                    title: '用户信息',  
-                    role: [0, 1],  
+                    title: '用户信息',
+                    role: [0, 1],
                 },
                 component: () => import('@/views/index/user/userInfo.vue'),
             },
@@ -36,55 +36,55 @@ const routes = [
                 path: 'material',
                 name: 'material',
                 meta: {
-                    title: '物料管理',  
-                    role: [0],  
+                    title: '物料管理',
+                    role: [0, 1],
                 },
                 component: () => import('@/views/index/material/material.vue'),
-            }, 
+            },
             {
                 path: 'material2',
                 name: 'material2',
                 meta: {
-                    title: '物料申请管理',  
-                    role: [1],  
+                    title: '物料申请管理',
+                    role: [1],
                 },
                 component: () => import('@/views/index/material/material2.vue'),
-            }, 
+            },
             {
                 path: 'partner',
                 name: 'partner',
                 meta: {
-                    title: '合伙人管理',  
-                    role: [0],  
+                    title: '合伙人管理',
+                    role: [0, 1],
                 },
                 component: () => import('@/views/index/partner/partner.vue'),
-            }, 
+            },
             {
                 path: 'ditui',
                 name: 'ditui',
                 meta: {
-                    title: '地推人员管理',  
-                    role: [1],  
+                    title: '地推人员管理',
+                    role: [1],
                 },
                 component: () => import('@/views/index/ditui/ditui.vue'),
-            }, 
+            },
+            {
+                path: 'resetPwd',
+                name: 'resetPwd',
+                meta: {
+                    title: '重置密码',
+                    role: [0, 1],
+                },
+                component: () => import('@/views/index/resetPwd/resetPwd.vue'),
+            },
         ]
-    }, 
-    {
-        path: '/reg',
-        name: 'reg',
-        meta: {
-            title: '注册',  
-            role: [1, 2, 3], 
-        },
-        component: () => import('@/views/reg/reg.vue'),
     },
     {
         path: '/login',
         name: 'login',
         meta: {
-            title: '登录',  
-            role: [1, 2, 3], 
+            title: '登录',
+            role: [1, 2, 3],
         },
         component: () => import('@/views/login/login.vue'),
     },

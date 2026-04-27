@@ -48,6 +48,10 @@
 										@click="goRouter(childItem)">
 										{{ childItem.title }}
 									</span>
+									<span class="font-medium" v-else-if="childItem.function == 'logout'"
+										@click="user.logout()">
+										{{ childItem.title }}
+									</span> 
 									<span class="font-medium" v-else>
 										{{ childItem.title }}
 									</span>
@@ -81,14 +85,10 @@ const list = computed(() => ({
 		},
 		{
 			title: "系统",
-			items: [
-				{
-					title: "修改密码",
-					url: "#",
-				},
+			items: [ 
 				{
 					title: "退出账号",
-					url: "#",
+					function: 'logout'
 				},
 			],
 		},

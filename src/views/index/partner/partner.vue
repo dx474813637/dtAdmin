@@ -24,12 +24,15 @@
 									<p class="text-sm text-gray-500">{{ item.user }}</p>
 								</div>
 							</div>
-							<div class="flex-shrink-0">
-								<span class="px-2.5 py-1 rounded-full text-xs font-medium " :class="{
+							<div class="flex-shrink-0 flex flex-col items-center gap-1">
+								<span class="px-2.5 py-1 rounded-full text-sm font-medium cursor-pointer " :class="{
 									'bg-green-100 text-green-800': item.img,
 									'bg-red-100 text-red-800': !item.img
-								}">
-									{{ item.zt === 1 ? '查看台签' : '上传台签' }}
+								}" @click="uploadImage(item)">
+									{{ item.img ? '查看台签' : '上传台签' }}
+								</span>
+								<span v-if="item.haibao" class="px-2.5 py-1 rounded-full text-sm font-medium cursor-pointer bg-purple-100 text-primary  " @click="previewHaibao(item)">
+									查看海报
 								</span>
 							</div>
 						</div>
@@ -51,7 +54,7 @@
 							<Clock8 class="shrink-0 size-4 text-indigo-400 mt-0.5" />
 							<p class="text-sm text-gray-600 leading-relaxed">{{ item.ctime }}</p>
 						</div>
- 
+
 
 						<!-- 操作按钮 -->
 						<div class="flex gap-3 mt-3">
@@ -106,19 +109,24 @@
 	</div>
 
 	<!-- 备注编辑对话框 -->
-	<RemarkForm 
-		v-model:dialogOpen="remarkDialogOpen"
-		v-model:partner="currentPartner"
-	/>
+	<RemarkForm v-model:dialogOpen="remarkDialogOpen" v-model:partner="currentPartner" />
 
 
 	<!-- 物料申请对话框 -->
-	<MaterialForm 
-		:dialogOpen="bindDialogOpen"
-		:partner="currentPartner"
-		@update:dialogOpen="(value) => bindDialogOpen = value"
-	/>
+	<MaterialForm :dialogOpen="bindDialogOpen" :partner="currentPartner"
+		@update:dialogOpen="(value) => bindDialogOpen = value" />
 
+	<!-- 上传台签对话框 -->
+	<UploadImageForm :dialogOpen="uploadDialogOpen" :partner="currentPartner"
+		@update:dialogOpen="(value) => uploadDialogOpen = value" @update:partner="updatePartner" />
+
+	<!-- 图片预览对话框 -->
+	<ImagePreview :dialogOpen="imagePreviewDialogOpen" :images="previewImages"
+		@update:dialogOpen="(value) => imagePreviewDialogOpen = value">
+		<template #footerBtn>
+			<Button type="button" variant="default" @click="handleAdminImage">管理图片</Button>
+		</template>
+	</ImagePreview>
 </template>
 
 <script setup lang="ts">
@@ -129,10 +137,16 @@ import { add_promotions, edit_partner } from '@/apis/interface/base'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 // import { PromotionsTable } from '@/components/promotions-table'
-import { RemarkForm, MaterialForm } from '@/components/partner'
+import { RemarkForm, MaterialForm, UploadImageForm, ImagePreview } from '@/components/partner'
 
 const $api = inject('$api')
 
+const options = computed(() => {
+	return { 
+		params: {},
+		api: 'partner',
+	}
+})
 // 使用useDataList
 const {
 	dataList,
@@ -140,15 +154,8 @@ const {
 	loadstatus,
 	initDataList,
 	setupScrollListener
-} = useDataList({
-	api: 'partner',
-	params: {},
-	// getDataCallBack: (res) => {
-	// 	if (res.code === 1) {
-	// 		dataList.value = [...dataList.value, ...res.list]
-	// 	}
-	// }
-})
+} = useDataList(options)
+ 
 
 // 错误状态
 const error = ref('')
@@ -165,6 +172,13 @@ const bindForm = ref({
 })
 const promotionsTableRef = ref(null)
 
+// 上传台签相关
+const uploadDialogOpen = ref(false)
+
+// 图片预览相关
+const imagePreviewDialogOpen = ref(false)
+const previewImages = ref([])
+
 // 编辑备注
 const editRemark = (item) => {
 	currentPartner.value = item
@@ -180,6 +194,43 @@ const bindPartner = (item) => {
 		numb: ''
 	}
 	bindDialogOpen.value = true
+}
+
+// 上传台签
+const uploadImage = (item) => {
+	currentPartner.value = item
+	if (item.img) {
+		// 如果有img属性，打开图片预览
+		previewImages.value = item.img.split(',').filter(url => url.trim())
+		imagePreviewDialogOpen.value = true
+	} else {
+		// 如果没有img属性，打开上传组件
+		uploadDialogOpen.value = true
+	}
+}
+// 管理图片
+const handleAdminImage = () => {
+	imagePreviewDialogOpen.value = false
+	uploadDialogOpen.value = true
+}
+
+// 预览海报
+const previewHaibao = (item) => {
+	if (item.haibao) {
+		// 如果有haibao属性，打开图片预览
+		previewImages.value = [item.haibao]
+		imagePreviewDialogOpen.value = true
+	}
+}
+// 更新合伙人信息
+const updatePartner = (updatedPartner) => {
+	// 更新currentPartner
+	currentPartner.value = updatedPartner
+	// 更新数据列表中的对应项
+	const index = dataList.value.findIndex(p => p.id === updatedPartner.id)
+	if (index !== -1) {
+		dataList.value[index] = updatedPartner
+	}
 }
 
 // 监听currentPartner变化，更新本地数据

@@ -31,7 +31,13 @@ export const material2 = (data) => axios.get('Dituiapi/material2', data)
 // material_shenhe 物料申请审核 参数id申请id zt=1 通过 2拒绝
 export const material_shenhe = (data) => axios.get('Dituiapi/material_shenhe', data) 
 
-// upimg  上传图片
-export const upimg = (data) => axios.get('Dituiapi/upimg', data)  
-// up_img_partner 上传台签 参数img 多个图片英文逗号隔开  
-export const up_img_partner = (data) => axios.get('Dituiapi/up_img_partner', data) 
+// upimg  上传图片 
+export const upimg = (data, config) => axios.post('Dituiapi/upimg', data, config) 
+// up_img_partner 上传台签 参数img 多个图片英文逗号隔开   
+export const up_img_partner = (data, config) => axios.post('Dituiapi/up_img_partner', data, config) 
+
+// overview  概况 参数cate=1是地推管理员状态，多传一个参数：login 地推人员账号。cate=0或其他，不用传login。返回2个数字：合伙人数 推广用户数
+export const overview = (data) => axios.get('Dituiapi/overview', data) 
+
+// statistical 统计 参数cate=1是地推管理员状态，多传一个参数：login 合伙人账号。cate=0或其他，不用传login。p=页数 返回推广用户列表，列表里有标记是否付费 user_total 用户总数 user_pay_total付费总数
+ export const statistical = (data) => axios.get('Dituiapi/statistical', data) 

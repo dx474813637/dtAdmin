@@ -56,6 +56,7 @@ declare module 'vue' {
     FormLabel: typeof import('./src/components/ui/form/FormLabel.vue')['default']
     FormMessage: typeof import('./src/components/ui/form/FormMessage.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
+    ImagePreview: typeof import('./src/components/partner/ImagePreview.vue')['default']
     Input: typeof import('./src/components/ui/input/Input.vue')['default']
     InputGroup: typeof import('./src/components/ui/input-group/InputGroup.vue')['default']
     InputGroupAddon: typeof import('./src/components/ui/input-group/InputGroupAddon.vue')['default']
@@ -76,6 +77,7 @@ declare module 'vue' {
     PaginationNext: typeof import('./src/components/ui/pagination/PaginationNext.vue')['default']
     PaginationPrevious: typeof import('./src/components/ui/pagination/PaginationPrevious.vue')['default']
     PromotionsTable: typeof import('./src/components/promotions-table/PromotionsTable.vue')['default']
+    RadioGroup: typeof import('./src/components/ui/radio-group/RadioGroup.vue')['default']
     RemarkForm: typeof import('./src/components/partner/RemarkForm.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
@@ -133,5 +135,6 @@ declare module 'vue' {
     TooltipContent: typeof import('./src/components/ui/tooltip/TooltipContent.vue')['default']
     TooltipProvider: typeof import('./src/components/ui/tooltip/TooltipProvider.vue')['default']
     TooltipTrigger: typeof import('./src/components/ui/tooltip/TooltipTrigger.vue')['default']
+    UploadImageForm: typeof import('./src/components/partner/UploadImageForm.vue')['default']
   }
 }

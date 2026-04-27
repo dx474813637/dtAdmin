@@ -1,5 +1,5 @@
 import { ref, computed, inject, onMounted, onUnmounted } from 'vue'
-
+import type { Ref } from 'vue'
 export interface UseDataListOptions {
   params?: Record<string, any>
   api: string
@@ -7,7 +7,7 @@ export interface UseDataListOptions {
   getDataCallBack?: (res: any) => void
 }
 
-export function useDataList(data: UseDataListOptions) {
+export function useDataList(data: Ref<UseDataListOptions>) {
   const $api = inject('$api') as Record<string, (params: any) => Promise<any>>
   const dataList = ref<any[]>([])
   const curP = ref(1)
@@ -18,7 +18,7 @@ export function useDataList(data: UseDataListOptions) {
   const params = computed(() => {
     return {
       p: curP.value,
-      ...data.params
+      ...data.value.params
     }
   })
   
@@ -43,9 +43,9 @@ export function useDataList(data: UseDataListOptions) {
   
   async function getDataList() {
     try {
-      const res = await $api[data.api]({ params: params.value })
-      if (data.getDataCallBack) {
-        data.getDataCallBack(res)
+      const res = await $api[data.value.api]({ params: params.value })
+      if (data.value.getDataCallBack) {
+        data.value.getDataCallBack(res)
       } else {
         if (res.code === 1) {
           dataList.value = [...dataList.value, ...res.list]
@@ -66,7 +66,7 @@ export function useDataList(data: UseDataListOptions) {
   
   // 滚动触底检测
   function handleScroll() {
-    if (data.noReach) return
+    if (data.value.noReach) return
     if (loadstatus.value !== 'loadmore') return
     
     const scrollTop = document.documentElement.scrollTop || document.body.scrollTop

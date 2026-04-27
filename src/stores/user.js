@@ -63,12 +63,21 @@ export const userStore = defineStore('user', {
 			localStorage.setItem('userid', data.userid)
 			localStorage.setItem('role', data.role)
 		},
+		setUserInfo(data) {
+			this.user_info = data  
+			localStorage.setItem('user_info', data)
+		},
 		logout() {
 			console.log('清除token 登录过期')
+			// this.user_info = {}
+			// this.setCookie('sunmaxx_st_company', '', 30)
+			this.userid = ''
+			this.role = ''
 			this.user_info = {}
-			this.setCookie('sunmaxx_st_company', '', 30)
-			localStorage.removeItem('token')
-			localStorage.removeItem('login')
+			localStorage.removeItem('userid')
+			localStorage.removeItem('role')
+			localStorage.removeItem('user_info')
+			router.push({ name: 'login' })
 		},
 		// async getRoleData(needLoading = false) {
 		// 	const res = await apis.getAccRole({ loading: needLoading });

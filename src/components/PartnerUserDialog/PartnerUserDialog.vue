@@ -48,7 +48,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="flex items-center justify-end gap-4">
+				<div class="flex items-center justify-end gap-4" v-if="userList.length > 0">
 					<div class="flex items-center gap-2 bg-green-50 px-3 py-1.5 rounded-full">
 						<span class="w-2 h-2 bg-green-500 rounded-full"></span>
 						<span class="text-sm font-medium text-green-700">{{ user_pay || 0 }}人已支付</span>
@@ -122,7 +122,7 @@ const {
 	loadstatus,
 	total,
 	initDataList,
-	getMoreDataList
+	getMoreDataList,
 } = useDataList(apiOptions)
 
 const handleClose = () => {

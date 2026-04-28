@@ -12,7 +12,7 @@ import pinia from '@/stores/index.js';
 import router from '@/router/guard'
 import test from '@/utils/test'
 // import * as icons from '@element-plus/icons-vue'
-// import 'element-plus/dist/index.css'
+import 'element-plus/dist/index.css'
 import './style.css'
 // import '@/styles/element-override.scss'
 import App from './App.vue'

@@ -107,6 +107,7 @@ export const createAxiosByinterceptors = (
                     
                     return Promise.reject(response.data);
                 } else {
+                    console.log('1', msg)
                     if( !response.config.url?.includes('my_card') ) {
                         ElMessage.error(msg);
                     } 

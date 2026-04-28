@@ -106,7 +106,7 @@ const routes = [
                 name: 'dev_admin_cft',
                 meta: {
                     title: '财富通发展管理',
-                    role: [0],
+                    role: [0, 1],
                 }, 
                 params: {
                     type: 'cft',
@@ -118,7 +118,7 @@ const routes = [
                 name: 'dev_admin_red',
                 meta: {
                     title: '红娘发展管理',
-                    role: [0],
+                    role: [0, 1],
                 }, 
                 params: {
                     type: 'red',

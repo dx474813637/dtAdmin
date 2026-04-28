@@ -1,18 +1,18 @@
 <template>
     <div class="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
-            <div class="mb-8">
+            <div class="mb-4">
                 <div class="text-center mb-6">
                     <h1 class="text-3xl font-bold text-gray-800 mb-2">推广详情</h1>
-                    <p class="text-gray-600">查看地推人员的推广详细信息</p>
+                    <p class="text-gray-600">查看地推人员及其合伙人的推广详细信息</p>
                 </div>
                 <div class="max-w-md mx-auto">
                     <DituiSelector v-model:dialogOpen="dituiDialogOpen" v-model:ditui="selectedDitui" />
                 </div>
             </div>
 
-            <div v-if="selectedDitui" class="mb-8">
-                <div class="bg-white rounded-xl shadow-sm p-4">
+            <div v-if="selectedDitui" class="mb-4">
+                <div class="bg-white rounded-xl shadow-sm p-4 pt-1">
                     <div class="flex border-b border-gray-100 mb-4">
                         <button v-for="tab in tabs" :key="tab.key" @click="activeTab = tab.key" :class="[
                             'flex-1 py-3 text-center font-medium transition-colors',
@@ -20,15 +20,26 @@
                         ]">
                             {{ tab.label }}
                         </button>
-                    </div>
+                    </div> 
+                    
                     <div class="grid grid-cols-2 gap-4">
                         <div class="bg-indigo-50 rounded-lg p-4">
                             <p class="text-sm text-gray-500 mb-1">合伙人数</p>
-                            <p class="text-2xl font-bold text-indigo-600">{{ overviewData.hhr_total || 0 }}</p>
+                            <p class="text-2xl font-bold text-indigo-600 ">
+                                <template v-if="overviewLoading"><Spinner /></template>
+                                <template v-else>
+                                    {{ overviewData.hhr_total || 0 }}
+                                </template>
+                            </p>
                         </div>
                         <div class="bg-green-50 rounded-lg p-4">
                             <p class="text-sm text-gray-500 mb-1">推广用户数</p>
-                            <p class="text-2xl font-bold text-green-600">{{ overviewData.member_total || 0 }}</p>
+                            <p class="text-2xl font-bold text-green-600 ">
+                                <template v-if="overviewLoading"><Spinner /></template>
+                                <template v-else>
+                                    {{ overviewData.member_total || 0 }}
+                                </template>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -98,6 +109,8 @@ const activeTab = ref('cft')
 const showPartnerDialog = ref(false)
 const selectedPartner = ref(null)
 
+const overviewLoading = ref(false)
+
 const overviewData = ref({
     hhr_total: 0,
     member_total: 0
@@ -138,6 +151,7 @@ watch(selectedDitui, (newVal) => {
 const fetchOverview = async () => {
     if (!selectedDitui.value) return
     const apiName = activeTab.value === 'cft' ? 'overview2' : 'overview'
+    overviewLoading.value = true
     try {
         const res = await $api[apiName]({
             params: { cate: 1, login: selectedDitui.value.login }
@@ -157,6 +171,8 @@ const fetchOverview = async () => {
         }
     } catch (e) {
         console.error(e)
+    } finally {
+        overviewLoading.value = false
     }
 }
 

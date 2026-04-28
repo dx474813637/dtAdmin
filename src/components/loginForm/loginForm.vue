@@ -147,8 +147,7 @@ function changeLoginType() {
 	logintype.value = 1 - logintype.value
 	handleReset()
 }
-const onSubmit = handleSubmit(async (values) => {
-	console.log('表单提交成功！', values)
+const onSubmit = handleSubmit(async (values) => { 
 	// 在这里发送你的API请求...
 	if (submitLoading.value) return
 	// 模拟获取验证码

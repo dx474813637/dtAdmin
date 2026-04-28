@@ -50,7 +50,7 @@
 
             <div class="flex gap-3 mt-3">
                 <template v-if="simplified"> 
-                    <Button variant="default" size="sm" class="flex-1" @click="handleClick">
+                    <Button size="sm" class="flex-1 bg-indigo-100 text-primary hover:text-white" @click="handleClick">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

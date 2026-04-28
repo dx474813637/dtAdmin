@@ -99,7 +99,7 @@
                             </span>
                             <span :class="[
                                 'px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-xs sm:text-sm font-medium',
-                                item.user_pay_total === 1 ? 'bg-indigo-100 text-indigo-600' : 'bg-gray-100 text-gray-500'
+                                item.user_pay_total === 1 ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-500'
                             ]">
                                 {{ item.user_pay_total === 1 ? '付费会员' : '普通用户' }}
                             </span>

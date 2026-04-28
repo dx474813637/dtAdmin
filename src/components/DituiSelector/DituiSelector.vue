@@ -25,7 +25,7 @@
 						<path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
 					</svg>
 				</div>
-				<div class="h-64 overflow-y-auto border rounded-md">
+				<div class=" h-[50vh] overflow-y-auto border rounded-md">
 					<div
 						v-for="item in dituiList"
 						:key="item.id"
@@ -39,7 +39,13 @@
 							</div>
 						</div>
 					</div>
-					<div v-if="dituiList.length === 0" class="p-8 text-center text-gray-500">暂无数据</div>
+					<!-- <div v-if="dituiList.length === 0" class="p-8 text-center text-gray-500">暂无数据</div> -->
+					<div v-if="dituiList.length === 0" class="text-center">
+						<img :src="empty" alt="暂无数据" class="w-full max-w h-24 sm:h-32 object-contain mx-auto mb-4" />
+						<p class="text-gray-500 text-sm">暂无数据</p>
+					</div>
+					<div v-else-if="loadstatus === 'nomore'" class="text-center py-4 text-gray-500 text-sm">已加载全部数据
+					</div>
 				</div>
 			</div>
 			<DialogFooter>
@@ -56,6 +62,10 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogTrigger, DialogClose } from '@/components/ui/dialog'
 import debounce from '@/utils/debounce.js'
+import { baseStore } from '@/stores/main.js'
+
+const base = baseStore()
+const { empty } = toRefs(base)
 
 const props = defineProps<{
 	dialogOpen: {
@@ -80,7 +90,7 @@ const options = computed(() => ({
 	api: 'ditui'
 }))
 
-const { dataList: dituiList, initDataList } = useDataList(options)
+const { dataList: dituiList, initDataList, loadstatus } = useDataList(options)
 
 const debouncedInitDataList = debounce(() => {
 	initDataList()

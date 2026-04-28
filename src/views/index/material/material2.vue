@@ -18,7 +18,7 @@
 				<!-- 物料卡片 -->
 				<div v-for="item in dataList" :key="item.id"
 					class="bg-white rounded-2xl shadow-sm  overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-					<div class="p-3">
+					<div class="p-4">
 						<!-- 卡片头部 -->
 						<div class="flex items-center justify-between mb-4">
 							<div class="flex items-center ">
@@ -84,8 +84,8 @@
 						</div>
 
 						<!-- 审核按钮 -->
-						<div v-if="item.zt == '0'" class="flex gap-2 mt-4">
-							<Button variant="default" size="sm" class="flex-1 " @click="openAuditDialog(item)">
+						<div v-if="item.zt == '0'" class="flex gap-2 mt-3">
+							<Button class="flex-1 bg-indigo-100 text-primary hover:text-white" size="sm" @click="openAuditDialog(item)">
 								审核管理
 							</Button>
 						</div>

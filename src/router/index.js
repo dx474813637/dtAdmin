@@ -17,8 +17,10 @@ const routes = [
         path: '/index',
         name: 'index',
         meta: {
+            title: '工作台',
             role: [0, 1],
-            needLogin: true
+            needLogin: true,
+            menusFlag: true,
         },
         redirect: () => ({ name: 'userInfo' }),
         component: () => import('@/views/index/index.vue'),
@@ -77,6 +79,52 @@ const routes = [
                 },
                 component: () => import('@/views/index/resetPwd/resetPwd.vue'),
             },
+        ]
+    },
+    {
+        path: '/data',
+        name: 'data',
+        meta: {
+            title: '数据统计',
+            role: [0, 1],
+            needLogin: true,
+            menusFlag: true,
+        },
+        component: () => import('@/views/index/index.vue'),
+        children: [
+            {
+                path: 'dev_detail',
+                name: 'dev_detail',
+                meta: {
+                    title: '推广详情',
+                    role: [1],
+                },
+                component: () => import('@/views/index/data/dev_detail.vue'),
+            },
+            {
+                path: 'dev_admin/:type',
+                name: 'dev_admin_cft',
+                meta: {
+                    title: '财富通发展管理',
+                    role: [0],
+                }, 
+                params: {
+                    type: 'cft',
+                },
+                component: () => import('@/views/index/data/dev_admin.vue'),
+            }, 
+            {
+                path: 'dev_admin/:type',
+                name: 'dev_admin_red',
+                meta: {
+                    title: '红娘发展管理',
+                    role: [0],
+                }, 
+                params: {
+                    type: 'red',
+                },
+                component: () => import('@/views/index/data/dev_admin.vue'),
+            }, 
         ]
     },
     {

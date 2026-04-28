@@ -79,10 +79,7 @@ const props = defineProps<SidebarProps>()
 // This is sample data.
 const list = computed(() => ({
 	navMain: [
-		{
-			title: "工作台",
-			items: renderMenus
-		},
+		...renderMenus,
 		{
 			title: "系统",
 			items: [ 
@@ -94,8 +91,8 @@ const list = computed(() => ({
 		},
 	],
 })) 
-function goRouter(item) { 
-	router.push({ name: item.router_name }) 
+function goRouter(item) {  
+	router.push({ name: item.router_name, params: item.params || {} }) 
 	// console.log(sidebar)
 	sidebar.setOpenMobile(false) 
 	// emit('update:close', false)

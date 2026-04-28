@@ -24,8 +24,12 @@
 				</div>
 			</div>
 
+			<div v-if="dataList.length === 0" class="text-center">
+				<img :src="empty" alt="暂无数据" class="w-full max-w h-24 sm:h-32 object-contain mx-auto mb-4" />
+				<p class="text-gray-500 text-sm">暂无数据</p>
+			</div>
 			<!-- 地推人员卡片列表 -->
-			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"> 
 				<!-- 地推人员卡片 -->
 				<div v-for="item in dataList" :key="item.id"
 					class="bg-white rounded-2xl shadow-sm  overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
@@ -99,6 +103,10 @@ import { ref, onMounted, onUnmounted, inject, watch } from 'vue'
 import { useDataList } from '@/composition/useDataList.ts'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { baseStore } from '@/stores/main.js' 
+
+const base = baseStore()
+const { empty } = toRefs(base)
 
 const $api = inject('$api')
 

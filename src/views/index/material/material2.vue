@@ -7,20 +7,24 @@
 				<h1 class="text-3xl font-bold text-gray-800 mb-2">物料申请列表</h1>
 				<p class="text-gray-600">管理和审核所有物料申请信息</p>
 			</div>
-
+			
+			<div v-if="dataList.length === 0" class="text-center">
+				<img :src="empty" alt="暂无数据" class="w-full max-w h-24 sm:h-32 object-contain mx-auto mb-4" />
+				<p class="text-gray-500 text-sm">暂无数据</p>
+			</div>
 			<!-- 物料卡片列表 -->
 			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+ 
 				<!-- 物料卡片 -->
 				<div v-for="item in dataList" :key="item.id"
 					class="bg-white rounded-2xl shadow-sm  overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
 					<div class="p-3">
 						<!-- 卡片头部 -->
 						<div class="flex items-center justify-between mb-4">
-							<div class="flex items-center "> 
+							<div class="flex items-center ">
 								<div class="flex items-center">
 									<span
-										class="px-2.5 py-1 rounded-full bg-gray-100 text-gray-600 text-sm font-medium cursor-pointer  mr-2"
-										>
+										class="px-2.5 py-1 rounded-full bg-gray-100 text-gray-600 text-sm font-medium cursor-pointer  mr-2">
 										ID: {{ item.id }}
 									</span>
 									<!-- <h3 class="font-semibold text-gray-900 mr-2">{{ item.type == '1' ? '单页' : '台签' }}
@@ -33,7 +37,7 @@
 									'bg-green-100 text-green-800': item.zt == '1',
 									'bg-red-100 text-red-800': item.zt == '2',
 									'bg-yellow-100 text-yellow-800': item.zt == '0',
-								}" >
+								}">
 									<template v-if="item.zt == '1'">审核通过</template>
 									<template v-else-if="item.zt == '2'">审核拒绝</template>
 									<template v-else>待审核</template>
@@ -137,7 +141,8 @@
 			<DialogFooter class="gap-2">
 				<Button variant="outline" @click="auditDialogOpen = false">关闭</Button>
 				<Button variant="destructive" @click="handleReject" :loading="auditLoading">拒绝</Button>
-				<Button variant="default" class="bg-green-600 hover:bg-green-700" @click="handleApprove" :loading="auditLoading">通过</Button>
+				<Button variant="default" class="bg-green-600 hover:bg-green-700" @click="handleApprove"
+					:loading="auditLoading">通过</Button>
 			</DialogFooter>
 		</DialogContent>
 	</Dialog>
@@ -148,6 +153,10 @@ import { ref, onMounted, onUnmounted, inject } from 'vue'
 import { useDataList } from '@/composition/useDataList.ts'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { baseStore } from '@/stores/main.js'
+
+const base = baseStore()
+const { empty } = toRefs(base)
 
 const $api = inject('$api')
 

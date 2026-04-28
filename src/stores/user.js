@@ -48,10 +48,19 @@ export const userStore = defineStore('user', {
 			return state.roleList.find(item => item.value === +state.role)?.menus || []
 		},
 		renderMenus(state) { 
+			console.log(state.role)
 			return router.getRoutes()
-					.filter(item => item.name === 'index')[0].children
-					.filter(item => item.meta.role.includes(+state.role))
-					.map(item => ({title: item.meta.title, router_name: item.name})) 
+					.filter(item => item.meta.menusFlag)
+					.map(item => {
+						let children = item.children
+										.filter(item => item.meta.role.includes(+state.role))
+										.map(item => ({title: item.meta.title, router_name: item.name, params: item.params})) 
+						return {
+							title: item.meta.title, 
+							items: children
+						}
+					})
+					
 		}
 	},
 	// 也可以这样定义

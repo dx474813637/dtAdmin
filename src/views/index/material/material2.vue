@@ -9,7 +9,7 @@
 			</div>
 			
 			<div v-if="dataList.length === 0" class="text-center">
-				<img :src="empty" alt="暂无数据" class="w-full max-w h-24 sm:h-32 object-contain mx-auto mb-4" />
+				<img :src="empty" alt="暂无数据" class="w-full max-w h-32 sm:h-32 object-contain mx-auto mb-4" />
 				<p class="text-gray-500 text-sm">暂无数据</p>
 			</div>
 			<!-- 物料卡片列表 -->

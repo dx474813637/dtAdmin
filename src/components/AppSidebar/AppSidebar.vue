@@ -10,7 +10,7 @@
 								<GalleryVerticalEnd class="size-4" />
 							</div>
 							<div class="flex flex-col gap-0.5 leading-none">
-								<span class="font-medium">地推系统</span>
+								<span class="font-medium">运营商管理系统</span>
 								<span class="">
 									<Badge variant="outline">
 										<User data-icon="inline-end" />{{ roleName }}
@@ -83,6 +83,10 @@ const list = computed(() => ({
 		{
 			title: "系统",
 			items: [ 
+				{
+					title: "重置密码",
+					router_name: 'resetPwd'
+				},
 				{
 					title: "退出账号",
 					function: 'logout'

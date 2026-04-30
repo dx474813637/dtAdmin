@@ -48,12 +48,12 @@ export const userStore = defineStore('user', {
 			return state.roleList.find(item => item.value === +state.role)?.menus || []
 		},
 		renderMenus(state) { 
-			console.log(state.role)
+			// console.log(state.role)
 			return router.getRoutes()
 					.filter(item => item.meta.menusFlag)
 					.map(item => {
 						let children = item.children
-										.filter(item => item.meta.role.includes(+state.role))
+										.filter(item => item.meta.role.includes(+state.role) && item.name !== 'resetPwd')
 										.map(item => ({title: item.meta.title, router_name: item.name, params: item.params})) 
 						return {
 							title: item.meta.title, 

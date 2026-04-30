@@ -77,8 +77,7 @@
 <script setup lang="ts">
 import { Building2, MapPinned, Bookmark, Clock8 } from "lucide-vue-next";
 import { ref, onMounted, onUnmounted, inject, watch } from 'vue'
-import { useDataList } from '@/composition/useDataList.ts'
-import { add_promotions, edit_partner } from '@/apis/interface/base'
+import { useDataList } from '@/composition/useDataList.ts' 
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 // import { PromotionsTable } from '@/components/promotions-table'

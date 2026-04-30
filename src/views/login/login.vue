@@ -28,7 +28,7 @@
 						<CardHeader>
 							<CardTitle>
 								<div class="flex flex-col items-center gap-1 text-center pt-4">
-									<h1 class="text-2xl font-bold">地推系统登录</h1>
+									<h1 class="text-2xl font-bold">运营商管理系统登录</h1>
 								</div>
 							</CardTitle>
 							<!-- <CardDescription>
@@ -87,7 +87,7 @@ watch(
 )
 watch(
 	() => router.currentRoute.value.query.uid,
-	(n) => {
+	(n) => { 
 		if (n || n === '0') {
 			uid.value = n
 		}

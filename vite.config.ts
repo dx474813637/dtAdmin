@@ -63,10 +63,11 @@ export default defineConfig({
 		rollupOptions: {
 			output: {
 				// 在这里修改静态资源路径
-				chunkFileNames: `assets/js/[name]-[hash].js`,
-				entryFileNames: `assets/js/[name]-[hash].js`,
-				assetFileNames: `assets/[ext]/[name]-[hash].[ext]`,
+				chunkFileNames: `assets_h5_ditui/js/[name]-[hash].js`,
+				entryFileNames: `assets_h5_ditui/js/[name]-[hash].js`,
+				assetFileNames: `assets_h5_ditui/[ext]/[name]-[hash].[ext]`,
 			},
 		},
+		assetsDir: 'assets_h5_ditui'
 	},
 });

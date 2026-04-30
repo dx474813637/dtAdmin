@@ -2,7 +2,7 @@
     <div :class="[
         'bg-white shadow-sm transition-all duration-300',
         'rounded-2xl overflow-hidden hover:shadow-lg transform hover:-translate-y-1'
-    ]" >
+    ]">
         <div class="p-6">
             <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center gap-3">
@@ -14,8 +14,13 @@
                         <p class="text-sm text-gray-500">{{ item.user }}</p>
                     </div>
                 </div>
-                <div class="flex-shrink-0 flex flex-col items-center gap-1" v-if="!simplified">
-                    <span class="px-2.5 py-1 rounded-full text-sm font-medium cursor-pointer" :class="{
+                <div class="flex-shrink-0 flex flex-col items-center gap-1">
+                    <span v-if="simplified && item.img"
+                        class="px-2.5 py-1 rounded-full text-sm font-medium cursor-pointer bg-yellow-100 text-yellow-800"
+                        @click.stop="handleUploadImage">
+                        查看台签
+                    </span>
+                    <span v-if="!simplified" class="px-2.5 py-1 rounded-full text-sm font-medium cursor-pointer" :class="{
                         'bg-green-100 text-green-800': item.img,
                         'bg-red-100 text-red-800': !item.img
                     }" @click.stop="handleUploadImage">
@@ -28,11 +33,11 @@
                     </span>
                 </div>
             </div>
+            <div v-if="item.company" class="mb-2 flex items-start gap-2">
+                <Building2 class="shrink-0 size-4 text-indigo-400 mt-0.5" />
+                <p class="text-sm text-gray-600 leading-relaxed">{{ item.company }}</p>
+            </div>
             <template v-if="!simplified">
-                <div v-if="item.company" class="mb-2 flex items-start gap-2">
-                    <Building2 class="shrink-0 size-4 text-indigo-400 mt-0.5" />
-                    <p class="text-sm text-gray-600 leading-relaxed">{{ item.company }}</p>
-                </div>
                 <div v-if="item.address" class="mb-2 flex items-start gap-2">
                     <MapPinned class="shrink-0 size-4 text-indigo-400 mt-0.5" />
                     <p class="text-sm text-gray-600 leading-relaxed">{{ item.address }}</p>
@@ -49,7 +54,7 @@
             </template>
 
             <div class="flex gap-3 mt-3">
-                <template v-if="simplified"> 
+                <template v-if="simplified">
                     <Button size="sm" class="flex-1 bg-indigo-100 text-primary hover:text-white" @click="handleClick">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">

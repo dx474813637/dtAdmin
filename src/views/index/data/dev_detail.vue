@@ -56,8 +56,12 @@
                     </div>
                 </div>
 
-                <div v-else-if="partnerList.length === 0" class="text-center py-12">
+                <!-- <div v-else-if="partnerList.length === 0" class="text-center py-12">
                     <p class="text-gray-500">暂无合伙人数据</p>
+                </div> -->
+                <div v-else-if="partnerList.length === 0" class="text-center">
+                    <img :src="empty" alt="暂无数据" class="w-full max-w h-32 sm:h-32 object-contain mx-auto mb-4" />
+                    <p class="text-gray-500 text-sm">暂无合伙人数据</p>
                 </div>
 
                 <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -67,6 +71,8 @@
                         :item="item"
                         :simplified="true"
                         @click="openPartnerDetail"
+                        @previewHaibao="previewHaibao"
+					    @uploadImage="previewImg"
                     />
                 </div>
             </div>
@@ -84,6 +90,10 @@
 
         <PartnerUserDialog v-model:open="showPartnerDialog" :partner="selectedPartner" />
     </div>
+	<!-- 图片预览对话框 -->
+	<ImagePreview :dialogOpen="imagePreviewDialogOpen" :images="previewImages"
+		@update:dialogOpen="(value) => imagePreviewDialogOpen = value"> 
+	</ImagePreview>
 </template>
 
 <script setup lang="ts">
@@ -91,7 +101,10 @@ import { ref, computed, onMounted, inject, watch } from 'vue'
 import { useDataList } from '@/composition/useDataList.ts'
 import { Button } from '@/components/ui/button'
 import { toRefs } from 'vue'
-import { baseStore } from '@/stores/main.js' 
+import { baseStore } from '@/stores/main.js'  
+
+const imagePreviewDialogOpen = ref(false)
+const previewImages = ref([])
 
 const base = baseStore()
 const { empty } = toRefs(base)
@@ -148,6 +161,21 @@ watch(selectedDitui, (newVal) => {
     }
 })
 
+// 预览海报
+const previewHaibao = (item) => {
+	if (item.haibao) {
+		// 如果有haibao属性，打开图片预览
+		previewImages.value = [item.haibao]
+		imagePreviewDialogOpen.value = true
+	}
+} 
+// 预览海报2
+const previewImg = (item) => {
+	if (item.img) {
+		previewImages.value = item.img.split(',').filter(url => url.trim())
+		imagePreviewDialogOpen.value = true
+	}
+} 
 const fetchOverview = async () => {
     if (!selectedDitui.value) return
     const apiName = activeTab.value === 'cft' ? 'overview2' : 'overview'
@@ -159,8 +187,8 @@ const fetchOverview = async () => {
         if (res.code === 1) {
             if (activeTab.value === 'cft') {
                 overviewData.value = {
-                    hhr_total: res.list.num_dy || 0,
-                    member_total: res.list.num_partner || 0
+                    hhr_total: res.list.num_partner || 0,
+                    member_total: res.list.num_dy || 0
                 }
             } else {
                 overviewData.value = {

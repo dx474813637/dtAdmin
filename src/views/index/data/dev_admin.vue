@@ -83,48 +83,19 @@
                         </svg>
                         <span class="text-red-500 text-sm">{{ error }}</span>
                     </div>
-                </div> 
+                </div>
                 <div v-else-if="dataList.length === 0" class=" text-center">
-                    <img :src="empty" alt="暂无数据" class="w-full max-w h-24 sm:h-32 object-contain mx-auto mb-4" />
+                    <img :src="empty" alt="暂无数据" class="w-full max-w h-32 sm:h-32 object-contain mx-auto mb-4" />
                     <p class="text-gray-500 text-sm">暂无数据</p>
                 </div>
-                <div v-else class=" gap-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-
-                    <div v-for="item in dataList" :key="item.id"
-                        class="bg-white rounded-xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-all duration-200">
-                        <div class="flex items-center justify-between mb-3">
-                            <span
-                                class="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-gray-100 text-gray-600 text-xs sm:text-sm font-medium">
-                                ID: {{ item.id }}
-                            </span>
-                            <span :class="[
-                                'px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-xs sm:text-sm font-medium',
-                                item.user_pay_total === 1 ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-500'
-                            ]">
-                                {{ item.user_pay_total === 1 ? '付费会员' : '普通用户' }}
-                            </span>
-                        </div>
-
-                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                            <div class="flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M3 5a2 2 0 0 1 2-2h3.28a1 1 0 0 1 .948.684l1.498 4.493a1 1 0 0 1-.502 1.21l-2.257 1.13a11.042 11.042 0 0 0 5.516 5.516l1.13-2.257a1 1 0 0 1 1.21-.502l4.493 1.498a1 1 0 0 1 .684.949V19a2 2 0 0 1-2 2h-1C9.716 21 3 14.284 3 6V5Z" />
-                                </svg>
-                                <span class="text-sm text-gray-700">{{ item.mobile || '未填写' }}</span>
-                            </div>
-
-                            <div class="flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2z" />
-                                </svg>
-                                <span class="text-sm text-gray-500">{{ item.register_time || '未知' }}</span>
-                            </div>
-                        </div>
-                    </div>
+                <div v-else class=" gap-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                    
+                    <PartnerUserCard
+                        v-for="item in dataList"
+                        :key="item.id"
+                        :item="item"
+                        :active-tab="type"
+                    /> 
                 </div>
 
                 <div v-if="!loading && loadstatus === 'nomore'" class="py-6 text-center">
@@ -156,7 +127,7 @@ const login = ref('')
 const overviewData = ref({
     hhr_total: 0,
     member_total: 0
-}) 
+})
 const user_pay = ref(0)
 
 const error = ref('')
@@ -209,6 +180,7 @@ const {
 watch(
     () => router.currentRoute.value.params.type,
     (newValue: any) => {
+        console.log(newValue)
         type.value = newValue
         error.value = ''
         getOverview()
@@ -239,8 +211,8 @@ async function getOverview() {
                 }
             } else {
                 overviewData.value = {
-                    hhr_total: res.list.num_dy ?? 0,
-                    member_total: res.list.num_partner ?? 0
+                    hhr_total: res.list.num_partner ?? 0,
+                    member_total: res.list.num_dy ?? 0
                 }
             }
         }

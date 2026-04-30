@@ -10,7 +10,7 @@
 						class="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
 						<GalleryVerticalEnd class="size-4" />
 					</div>
-					<span class="text-lg font-semibold">地推管理系统</span>
+					<span class="text-lg font-semibold">运营商管理系统</span>
 					<span class="text-sm text-gray-600">/ {{ title }}</span>
 				</div>
 				<SidebarTrigger class="size-6" />

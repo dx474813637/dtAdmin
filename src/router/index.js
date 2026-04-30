@@ -35,29 +35,11 @@ const routes = [
                 component: () => import('@/views/index/user/userInfo.vue'),
             },
             {
-                path: 'material',
-                name: 'material',
-                meta: {
-                    title: '物料管理',
-                    role: [0, 1],
-                },
-                component: () => import('@/views/index/material/material.vue'),
-            },
-            {
-                path: 'material2',
-                name: 'material2',
-                meta: {
-                    title: '物料申请管理',
-                    role: [1],
-                },
-                component: () => import('@/views/index/material/material2.vue'),
-            },
-            {
                 path: 'partner',
                 name: 'partner',
                 meta: {
                     title: '合伙人管理',
-                    role: [0, 1],
+                    role: [0],
                 },
                 component: () => import('@/views/index/partner/partner.vue'),
             },
@@ -69,6 +51,24 @@ const routes = [
                     role: [1],
                 },
                 component: () => import('@/views/index/ditui/ditui.vue'),
+            },
+            {
+                path: 'material',
+                name: 'material',
+                meta: {
+                    title: '物料管理',
+                    role: [0],
+                },
+                component: () => import('@/views/index/material/material.vue'),
+            },
+            {
+                path: 'material2',
+                name: 'material2',
+                meta: {
+                    title: '物料申请管理',
+                    role: [1],
+                },
+                component: () => import('@/views/index/material/material2.vue'),
             },
             {
                 path: 'resetPwd',
@@ -106,7 +106,7 @@ const routes = [
                 name: 'dev_admin_cft',
                 meta: {
                     title: '财富通发展管理',
-                    role: [0, 1],
+                    role: [0],
                 }, 
                 params: {
                     type: 'cft',
@@ -118,7 +118,7 @@ const routes = [
                 name: 'dev_admin_red',
                 meta: {
                     title: '红娘发展管理',
-                    role: [0, 1],
+                    role: [0],
                 }, 
                 params: {
                     type: 'red',

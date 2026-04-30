@@ -27,7 +27,7 @@
 						<div class="flex justify-between items-center py-3 border-b border-gray-100">
 							<span class="text-gray-500">用户名</span>
 							<div class="flex items-center">
-								<Dialog  v-model:open="isDialogOpen">
+								<Dialog v-model:open="isDialogOpen">
 									<DialogTrigger>
 										<Badge variant="secondary" class="mr-2 ">
 											<SquarePen class="size-4 mr-1" />
@@ -52,7 +52,8 @@
 											<DialogClose asChild>
 												<Button variant="outline">取 消</Button>
 											</DialogClose>
-											<Button type="submit" @click="submitForm" :loading="editLoading" :disabled="editLoading">提 交</Button>
+											<Button type="submit" @click="submitForm" :loading="editLoading"
+												:disabled="editLoading">提 交</Button>
 										</DialogFooter>
 									</DialogContent>
 
@@ -76,38 +77,43 @@
 							</span>
 						</div>
 						<!-- 发展人 -->
-							<div class="flex justify-between items-center py-3 border-b border-gray-100">
-								<span class="text-gray-500">发展人</span>
-								<span class="text-gray-800 font-medium">{{ userInfo.develop || '无' }}</span>
-							</div>
-
-							<!-- 发展码 -->
-							<div class="flex justify-between items-center py-3 border-b border-gray-100">
-								<span class="text-gray-500">发展码</span>
-								<div class="flex items-center">
-									<button 
-										v-if="userInfo.ewm" 
-										class="text-indigo-600 hover:text-indigo-800 text-sm font-medium"
-										@click="previewEwm"
-									>
-										查看二维码
-									</button>
-									<span v-else class="text-gray-400 font-medium">未设置</span>
-								</div>
-							</div>
-
+						<div class="flex justify-between items-center py-3 border-b border-gray-100">
+							<span class="text-gray-500">发展人</span>
+							<span class="text-gray-800 font-medium">{{ userInfo.develop || '无' }}</span>
 						</div>
+
+						<!-- 发展码 -->
+						<div class="flex justify-between items-center py-3 border-b border-gray-100" v-if="userInfo.ewm">
+							<span class="text-gray-500">绑定合伙人发展码</span>
+							<div class="flex items-center">
+								<button
+									class="text-indigo-600 hover:text-indigo-800 text-sm font-medium"
+									@click="previewEwm(userInfo.ewm)">
+									查看二维码
+								</button> 
+							</div>
+						</div>
+						<!-- 发展码2 -->
+						<div class="flex justify-between items-center py-3 border-b border-gray-100" v-if="userInfo.ewm2">
+							<span class="text-gray-500">绑定地推人二维码</span>
+							<div class="flex items-center">
+								<button 
+									class="text-indigo-600 hover:text-indigo-800 text-sm font-medium"
+									@click="previewEwm(userInfo.ewm2)">
+									查看二维码
+								</button> 
+							</div>
+						</div>
+
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
 	<!-- 图片预览对话框 -->
-	<ImagePreview
-		:dialogOpen="imagePreviewDialogOpen"
-		:images="previewImages"
-		@update:dialogOpen="(value) => imagePreviewDialogOpen = value"
-	/>
+	<ImagePreview :dialogOpen="imagePreviewDialogOpen" :images="previewImages"
+		@update:dialogOpen="(value) => imagePreviewDialogOpen = value" />
 
 </template>
 
@@ -117,9 +123,9 @@ import { SquarePen } from "lucide-vue-next"
 import { info } from '@/apis/interface/base'
 import { Input } from "@/components/ui/input"
 import { ImagePreview } from '@/components/partner'
-import {userStore} from '@/stores/user'
+import { userStore } from '@/stores/user'
 const user = userStore()
-const {roleName} = toRefs(user)
+const { roleName } = toRefs(user)
 const $api = inject('$api')
 const userInfo = ref({ name: '' })
 const loading = ref(true)
@@ -147,7 +153,7 @@ onMounted(async () => {
 })
 
 const submitForm = async () => {
-	if(editLoading.value) return
+	if (editLoading.value) return
 	editLoading.value = true
 	try {
 		const res = await $api.edit_info({ params: { name: userInfo.value.name } })
@@ -165,9 +171,9 @@ const submitForm = async () => {
 }
 
 // 预览发展码
-const previewEwm = () => {
-	if (userInfo.value.ewm) {
-		previewImages.value = [userInfo.value.ewm]
+const previewEwm = (img) => {
+	if (img) {
+		previewImages.value = [img]
 		imagePreviewDialogOpen.value = true
 	}
 }
